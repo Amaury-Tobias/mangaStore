@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/template :: layout (~{::body}, 'Hello')}">
+
+<body>
+<main class="container">
+    <!--/*@thymesVar id="username" type="controller.HelloController"*/-->
+    <h1 class="center-align" th:text="${username}"></h1>
+</main>
+
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>
