@@ -24,6 +24,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.stereotype.Controller;
@@ -45,12 +46,9 @@ public class Main {
     @Value("${spring.datasource.url}")
     private String dbUrl;
 
-    private DataSource dataSource;
-
     @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    @Lazy
+    private DataSource dataSource;
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Main.class, args);
