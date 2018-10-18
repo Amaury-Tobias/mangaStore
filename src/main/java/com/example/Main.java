@@ -29,6 +29,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import user.User;
 import user.UserJDBCTemplate;
 
 import javax.sql.DataSource;
@@ -52,10 +53,8 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Main.class, args);
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(getConnection(), false));
-        //UserJDBCTemplate userTemplate = new UserJDBCTemplate();
-        //userTemplate.setDataSource(getConnection());
     }
+
     public static Connection getConnection() throws URISyntaxException, SQLException {
         URI jdbUri = new URI(System.getenv("JAWSDB_URL"));
 
@@ -95,6 +94,15 @@ public class Main {
             model.put("message", e.getMessage());
             return "error";
         }
+    }
+
+    @RequestMapping("/user")
+    String user(Map<String, Object> model) throws URISyntaxException, SQLException {
+        UserJDBCTemplate userTemplate = new UserJDBCTemplate();
+        userTemplate.setDataSource(getConnection());
+        User user = userTemplate.getUser(1);
+        model.put("user", user);
+        return "index";
     }
 
     @Bean
