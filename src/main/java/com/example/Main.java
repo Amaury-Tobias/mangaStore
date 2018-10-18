@@ -24,6 +24,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import user.UserJDBCTemplate;
@@ -48,12 +50,14 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Main.class, args);
-        UserJDBCTemplate userTemplate = new UserJDBCTemplate();
-        userTemplate.setDataSource(getConnection());
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(getConnection(), false));
+        //UserJDBCTemplate userTemplate = new UserJDBCTemplate();
+        //userTemplate.setDataSource(getConnection());
     }
-    public static Connection getConnection()
-            throws URISyntaxException, SQLException {
+    public static Connection getConnection() throws URISyntaxException, SQLException {
         URI jdbUri = new URI(System.getenv("JAWSDB_URL"));
+
+        System.out.println(jdbUri.toString());
 
         String username = jdbUri.getUserInfo().split(":")[0];
         String password = jdbUri.getUserInfo().split(":")[1];
