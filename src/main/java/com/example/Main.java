@@ -26,12 +26,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import user.UserJDBCTemplate;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -48,6 +48,21 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Main.class, args);
+        UserJDBCTemplate userTemplate = new UserJDBCTemplate();
+        userTemplate.setDataSource(getConnection());
+    }
+    public static Connection getConnection()
+            throws URISyntaxException, SQLException {
+        URI jdbUri = new URI(System.getenv("JAWSDB_URL"));
+
+        String username = jdbUri.getUserInfo().split(":")[0];
+        String password = jdbUri.getUserInfo().split(":")[1];
+        String port = String.valueOf(jdbUri.getPort());
+        String jdbUrl = "jdbc:mysql://" + jdbUri.getHost() +
+                ":" + port + jdbUri.getPath();
+
+        return DriverManager.getConnection(
+                jdbUrl, username, password);
     }
 
     @RequestMapping("/")
