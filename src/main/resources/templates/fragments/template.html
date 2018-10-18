@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org" th:fragment="layout (template, title)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.4.1/css/all.css}">
+    <link rel="stylesheet" th:href="@{/webjars/materializecss/1.0.0/css/materialize.min.css}">
+</head>
+<body>
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper teal">
+            <a href="#!" class="brand-logo">MangaStore</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#">Tienda</a></li>
+                <li><a href="#">Nosotros</a></li>
+                <li><a href="#">Mas...</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<ul class="sidenav" id="mobile-demo">
+    <li><a href="#">Tienda</a></li>
+    <li><a href="#">Nosotros</a></li>
+    <li><a href="#">Mas...</a></li>
+</ul>
+
+<div th:replace="${template}"></div>
+
+<script th:src="@{/webjars/jquery/3.3.1-1/jquery.min.js}"></script>
+<script th:src="@{/webjars/materializecss/1.0.0/js/materialize.min.js}"></script>
+<script !src="">
+    $(document).ready(function(){
+        $('.sidenav').sidenav();
+    });
+</script>
+</body>
+</html>
