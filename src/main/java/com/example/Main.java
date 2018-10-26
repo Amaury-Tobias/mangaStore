@@ -32,7 +32,6 @@ public class Main {
 
     @Value("${spring.datasource.url}")
     private String dbUrl;
-            //= "jdbc:mysql://doawu72q4gw6qoky:hcrqq99mvj0vwoz7@tkck4yllxdrw0bhi.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/my18oqbrxofy7fcd";
 
     @Lazy
     @Autowired

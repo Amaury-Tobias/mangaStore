@@ -21,7 +21,8 @@ public class UserJDBCTemplate {
 
     public User getUser(Integer id){
         String SQL = "SELECT * FROM user WHERE id = ?";
-        User user = jdbcTemplate.queryForObject(SQL, new RowMapper<User>() {
+
+        return jdbcTemplate.queryForObject(SQL, new Object[]{id} ,new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet rs, int rowNum) throws SQLException {
                 User user = new User();
@@ -30,8 +31,7 @@ public class UserJDBCTemplate {
                 user.setAge(rs.getInt("age"));
                 return user;
             }
-        }, id);
-        return user;
+        });
     }
 
 }
