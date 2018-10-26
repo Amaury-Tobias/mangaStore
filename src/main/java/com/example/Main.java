@@ -32,28 +32,14 @@ public class Main {
 
     @Value("${spring.datasource.url}")
     private String dbUrl;
+            //= "jdbc:mysql://doawu72q4gw6qoky:hcrqq99mvj0vwoz7@tkck4yllxdrw0bhi.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/my18oqbrxofy7fcd";
 
-    @Autowired
     @Lazy
-    private DataSource dataSource;
+    @Autowired
+    private HikariDataSource dataSource;
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Main.class, args);
-    }
-
-    public static Connection getConnection() throws URISyntaxException, SQLException {
-        URI jdbUri = new URI(System.getenv("JAWSDB_URL"));
-
-        System.out.println(jdbUri.toString());
-
-        String username = jdbUri.getUserInfo().split(":")[0];
-        String password = jdbUri.getUserInfo().split(":")[1];
-        String port = String.valueOf(jdbUri.getPort());
-        String jdbUrl = "jdbc:mysql://" + jdbUri.getHost() +
-                ":" + port + jdbUri.getPath();
-
-        return DriverManager.getConnection(
-                jdbUrl, username, password);
     }
 
     @RequestMapping("/")
@@ -85,7 +71,7 @@ public class Main {
     @RequestMapping("/user")
     String user(Map<String, Object> model) throws URISyntaxException, SQLException {
         UserJDBCTemplate userTemplate = new UserJDBCTemplate();
-        userTemplate.setDataSource(getConnection());
+        userTemplate.setDataSource(dataSource.getConnection());
         User user = userTemplate.getUser(1);
         model.put("user", user);
         return "index";
