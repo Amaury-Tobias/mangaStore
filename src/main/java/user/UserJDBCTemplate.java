@@ -13,7 +13,6 @@ public class UserJDBCTemplate {
     private JdbcTemplate jdbcTemplate;
 
     public void setDataSource(Connection connection){
-        //this.jdbcTemplate = new JdbcTemplate((DataSource) connection);
         this.jdbcTemplate = new JdbcTemplate(
                 new SingleConnectionDataSource(connection, false)
         );
