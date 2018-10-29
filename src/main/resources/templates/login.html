@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/template :: layout (~{::body}, 'Login Page')}">
+
+<body>
+<main class="container">
+    <h1 class="center-align">Login</h1>
+
+    <div class="row">
+        <div class="col s12">
+            <div class="card-panel red lighten-5" th:if="${param.error}">
+        <span class="red-text">
+             Username y password incorrectos, intentalo nuevamente.
+        </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <form class="col s12" action="/login" method="post">
+            <div class="input-field col m6 s12">
+                <input name="username" id="email" type="text" class="validate">
+                <label for="email">Email</label>
+            </div>
+            <div class="input-field col m6 s12">
+                <input name="password" id="password" type="password" class="validate">
+                <label for="password">Password</label>
+            </div>
+            <div class="input-field col s12 center-align">
+                <button type="submit" class="waves-effect waves-light btn">Login</button>
+            </div>
+        </form>
+    </div>
+
+</main>
+
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

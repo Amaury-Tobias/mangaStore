@@ -1,51 +1,37 @@
-
-
-package com.example;
+package com;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import user.User;
 import user.UserJDBCTemplate;
 
 import javax.sql.DataSource;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Map;
 
-@Controller
 @SpringBootApplication
-@ComponentScan(basePackages = {"controller"})
 public class Main {
-
-    //@Value("${spring.datasource.url}")
-    private String dbUrl = "jdbc:mysql://fhjylm9br7q9zkvv:umhf0dyxyrgxjre3@x3ztd854gaa7on6s.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/u9awjg2n3b4l5ogo";
 
     @Lazy
     @Autowired
-    private HikariDataSource dataSource;
+    private DataSource dataSource;
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Main.class, args);
     }
-
-    @RequestMapping("/")
-    String index() {
-        return "index";
-    }
-
+/*
     @RequestMapping("/db")
     String db(Map<String, Object> model) {
         try (Connection connection = dataSource.getConnection()) {
@@ -75,6 +61,9 @@ public class Main {
         model.put("user", user);
         return "index";
     }
+*/
+    //@Value("${spring.datasource.url}")
+    private String dbUrl = "jdbc:mysql://fhjylm9br7q9zkvv:umhf0dyxyrgxjre3@x3ztd854gaa7on6s.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/u9awjg2n3b4l5ogo";
 
     @Bean
     public DataSource dataSource() throws SQLException {
