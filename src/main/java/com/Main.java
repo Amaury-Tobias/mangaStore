@@ -3,6 +3,7 @@ package com;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -62,7 +63,7 @@ public class Main {
         return "index";
     }
 */
-    //@Value("${spring.datasource.url}")
+    @Value("${spring.datasource.url}")
     private String dbUrl = "jdbc:mysql://fhjylm9br7q9zkvv:umhf0dyxyrgxjre3@x3ztd854gaa7on6s.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/u9awjg2n3b4l5ogo";
     @Bean
     public DataSource dataSource() throws SQLException {
