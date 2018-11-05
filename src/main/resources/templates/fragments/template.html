@@ -16,6 +16,7 @@
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="css/core-style.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
 
 </head>
 <body>
@@ -39,7 +40,19 @@
                 <!-- Nav Start -->
                 <div class="classynav">
                     <ul>
-                        <li><a href="#">Shop</a>
+                        <li sec:authorize="!isAnonymous()">
+                            <a href="#">
+                                <span sec:authentication="name"></span>
+                            </a>
+                            <div class="megamenu">
+                                <ul class="single-mega cn-col4">
+                                    <li class="title" sec:authentication="name"></li>
+                                    <li><a th:href="@{/logout}">Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#">Shop</a>
                             <div class="megamenu">
                                 <ul class="single-mega cn-col-4">
                                     <li class="title">Collection one</li>
@@ -73,14 +86,24 @@
             </div>
             <!-- Favourite Area -->
             <div class="favourite-area">
-                <a th:href="@{~/cart}"><img src="img/core-img/bag.svg" alt=""></a>
+                <a th:href="@{~/cart}"
+                   data-toggle="tooltip" data-placement="bottom" title="Bag">
+                    <img src="img/core-img/bag.svg" alt="">
+                </a>
             </div>
             <!-- User Login Info -->
             <div class="user-login-info">
-                <a th:href="@{~/user}"><img src="img/core-img/user.svg" alt=""></a>
+                <a sec:authorize="!isAnonymous()" href="#">
+                    <img src="img/core-img/user.svg" alt="">
+                </a>
+                <span sec:authorize="isAnonymous()">
+                    <a th:href="@{/login}"
+                       data-toggle="tooltip" data-placement="bottom" title="Login">
+                        <img src="img/core-img/user.svg" alt="">
+                    </a>
+                </span>
             </div>
         </div>
-
     </div>
 </header>
 <!-- ##### Header Area End ##### -->

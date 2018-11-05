@@ -25,10 +25,6 @@ import java.util.Map;
 @SpringBootApplication
 public class Main {
 
-    @Lazy
-    @Autowired
-    private DataSource dataSource;
-
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Main.class, args);
     }
@@ -70,5 +66,7 @@ public class Main {
             return new HikariDataSource(config);
         }
     }
+
+
 
 }
