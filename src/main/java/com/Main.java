@@ -54,8 +54,9 @@ public class Main {
         }
     }
 */
-    //@Value("${spring.datasource.url}")
-    private String dbUrl = "jdbc:mysql://fhjylm9br7q9zkvv:umhf0dyxyrgxjre3@x3ztd854gaa7on6s.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/u9awjg2n3b4l5ogo";
+    @Value("${spring.datasource.url}")
+    private String dbUrl;
+
     @Bean
     public DataSource dataSource() throws SQLException {
         if (dbUrl == null || dbUrl.isEmpty()) {
