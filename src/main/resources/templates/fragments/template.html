@@ -1,47 +1,91 @@
 <!DOCTYPE html>
-
 <html lang="es"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       th:fragment="layout (template, title)">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="PAPW Store">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <title th:text="${title}"></title>
-    <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.4.1/css/all.css}">
-    <link rel="stylesheet" th:href="@{/webjars/materializecss/1.0.0/css/materialize.min.css}">
+    <!-- Favicon  -->
+    <link rel="icon" href="img/core-img/favicon.ico">
+
+    <!-- Core Style CSS -->
+    <link rel="stylesheet" href="css/core-style.css">
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-<div class="navbar-fixed">
-    <nav class="teal">
-        <div class="nav-wrapper teal container">
-            <a href="/" class="brand-logo">Store</a>
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="#">Tienda</a></li>
-                <li><a href="/about">About</a></li>
-                <li sec:authorize="isAnonymous()"><a href="/login">Login</a></li>
-                <li sec:authorize="isFullyAuthenticated()"><a href="/logout">Logout</a></li>
-            </ul>
-        </div>
-    </nav>
-</div>
+<!-- ##### Header Area Start ##### -->
+<header class="header_area">
+    <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
+        <!-- Classy Menu -->
+        <nav class="classy-navbar" id="essenceNav">
+            <!-- Logo -->
+            <a class="nav-brand" th:href="@{~/}"><img src="img/core-img/logo.png" alt=""></a>
+            <!-- Navbar Toggler -->
+            <div class="classy-navbar-toggler">
+                <span class="navbarToggler"><span></span><span></span><span></span></span>
+            </div>
+            <!-- Menu -->
+            <div class="classy-menu">
+                <!-- close btn -->
+                <div class="classycloseIcon">
+                    <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                </div>
+                <!-- Nav Start -->
+                <div class="classynav">
+                    <ul>
+                        <li><a href="#">Shop</a>
+                            <div class="megamenu">
+                                <ul class="single-mega cn-col-4">
+                                    <li class="title">Collection one</li>
+                                    <li><a th:href="@{~/collection(group=1,col=1)}">Class One</a></li>
+                                    <li><a th:href="@{~/collection(group=1,col=2)}">Class Two</a></li>
+                                    <li><a th:href="@{~/collection(group=1,col=3)}">Class Three</a></li>
+                                </ul>
+                                <ul class="single-mega cn-col-4">
+                                    <li class="title">Collection Two</li>
+                                    <li><a th:href="@{~/collection(group=2,col=1)}">Class One</a></li>
+                                    <li><a th:href="@{~/collection(group=2,col=2)}">Class Two</a></li>
+                                    <li><a th:href="@{~/collection(group=2,col=3)}">Class Three</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a th:href="@{~/about}">About</a></li>
+                    </ul>
+                </div>
+                <!-- Nav End -->
+            </div>
+        </nav>
 
-<ul class="sidenav" id="mobile-demo">
-    <li><a href="#">Tienda</a></li>
-    <li><a href="/about">About</a></li>
-    <li sec:authorize="isAnonymous()"><a href="/login">Login</a></li>
-    <li sec:authorize="isFullyAuthenticated()"><a href="/logout">Logout</a></li>
-</ul>
+        <!-- Header Meta Data -->
+        <div class="header-meta d-flex clearfix justify-content-end">
+            <!-- Search Area -->
+            <div class="search-area">
+                <form action="/search" method="post">
+                    <input type="search" name="search" id="headerSearch" placeholder="Search">
+                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </form>
+            </div>
+            <!-- Favourite Area -->
+            <div class="favourite-area">
+                <a th:href="@{~/cart}"><img src="img/core-img/bag.svg" alt=""></a>
+            </div>
+            <!-- User Login Info -->
+            <div class="user-login-info">
+                <a th:href="@{~/user}"><img src="img/core-img/user.svg" alt=""></a>
+            </div>
+        </div>
+
+    </div>
+</header>
+<!-- ##### Header Area End ##### -->
 
 <div th:replace="${template}"></div>
 
-<script th:src="@{/webjars/jquery/3.3.1-1/jquery.min.js}"></script>
-<script th:src="@{/webjars/materializecss/1.0.0/js/materialize.min.js}"></script>
-<script !src="">
-    $(document).ready(function(){
-        $('.sidenav').sidenav();
-    });
-</script>
 </body>
 </html>
