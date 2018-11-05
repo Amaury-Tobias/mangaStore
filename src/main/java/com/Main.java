@@ -53,17 +53,8 @@ public class Main {
             return "error";
         }
     }
-
-    @RequestMapping("/user")
-    String user(Map<String, Object> model) throws URISyntaxException, SQLException {
-        UserJDBCTemplate userTemplate = new UserJDBCTemplate();
-        userTemplate.setDataSource(dataSource.getConnection());
-        User user = userTemplate.getUser(1);
-        model.put("user", user);
-        return "index";
-    }
 */
-    @Value("${spring.datasource.url}")
+    //@Value("${spring.datasource.url}")
     private String dbUrl = "jdbc:mysql://fhjylm9br7q9zkvv:umhf0dyxyrgxjre3@x3ztd854gaa7on6s.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/u9awjg2n3b4l5ogo";
     @Bean
     public DataSource dataSource() throws SQLException {

@@ -25,11 +25,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureAuth(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(passwordEncoder());
-
-        auth.inMemoryAuthentication().passwordEncoder(passwordEncoder())
-                .withUser("user").password(passwordEncoder().encode("password")).roles("USER")
-                .and()
-                .withUser("admin").password(passwordEncoder().encode("password")).roles("ADMIN");
     }
 
     @Override
@@ -44,7 +39,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
-                .rememberMe().tokenValiditySeconds(432000).key("Store")
+                .rememberMe().tokenValiditySeconds(60*60*24).key("Store")
                 .and()
                 .logout().logoutSuccessUrl("/").permitAll()
                 .and()
