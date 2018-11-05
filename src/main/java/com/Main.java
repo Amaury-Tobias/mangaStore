@@ -63,6 +63,9 @@ public class Main {
         } else {
             HikariConfig config = new HikariConfig();
             config.setJdbcUrl(dbUrl);
+            config.setIdleTimeout(1000*60*5);
+            config.setMinimumIdle(2);
+            config.setMaximumPoolSize(8);
             return new HikariDataSource(config);
         }
     }
