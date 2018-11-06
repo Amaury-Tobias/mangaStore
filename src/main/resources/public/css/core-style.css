@@ -9,7 +9,6 @@
 @import url(../css/magnific-popup.css);
 @import url(../css/jquery-ui.min.css);
 @import url(../css/nice-select.css);
-@import url(../css/font-awesome.min.css);
 /* :: 3.0 Common/Base CSS */
 * {
   margin: 0;
@@ -380,7 +379,7 @@ img {
     .header_area .favourite-area a img,
     .header_area .user-login-info a img,
     .header_area .cart-area a img {
-      max-width: 20px; }
+      max-width: 50px; }
     .header_area .favourite-area a span,
     .header_area .user-login-info a span,
     .header_area .cart-area a span {

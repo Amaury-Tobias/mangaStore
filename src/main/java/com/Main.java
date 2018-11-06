@@ -1,26 +1,16 @@
 package com;
 
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScans;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import user.User;
 import user.UserJDBCTemplate;
-
-import javax.sql.DataSource;
-import java.net.URISyntaxException;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.Map;
 
 @SpringBootApplication
 public class Main {
@@ -50,8 +40,8 @@ public class Main {
         }
     }
 */
-    @Value("${spring.datasource.url}")
-    private String dbUrl;
+    //@Value("${spring.datasource.url}")
+    private String dbUrl = "jdbc:mysql://vahf5voe2w0xln5z:osenmng86mplly41@yhrz9vns005e0734.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/mxbrv4djh5ub33r4";
 
     @Bean
     public DataSource dataSource() throws SQLException {
@@ -59,6 +49,7 @@ public class Main {
             return new HikariDataSource();
         } else {
             HikariConfig config = new HikariConfig();
+            //config.setDriverClassName("com.mysql.");
             config.setJdbcUrl(dbUrl);
             config.setIdleTimeout(1000*60*5);
             config.setMinimumIdle(2);
@@ -67,6 +58,10 @@ public class Main {
         }
     }
 
-
+    @Bean
+    UserJDBCTemplate userJDBCTemplate()
+    {
+        return new UserJDBCTemplate();
+    }
 
 }
