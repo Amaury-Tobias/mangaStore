@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="es"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:fragment="layout (template, title)">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    th:fragment="layout (template, title)">
+
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="PAPW Store">
@@ -14,101 +13,50 @@
     <link rel="icon" href="img/core-img/favicon.ico">
 
     <!-- Core Style CSS -->
-    <link rel="stylesheet" href="css/core-style.css">
-    <link rel="stylesheet" href="webjars/font-awesome/5.4.1/css/all.css">
+
 
 </head>
+
 <body>
-<!-- ##### Header Area Start ##### -->
-<header class="header_area">
-    <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
-        <!-- Classy Menu -->
-        <nav class="classy-navbar" id="essenceNav">
-            <!-- Logo -->
-            <a class="nav-brand" th:href="@{~/}"><img src="img/core-img/logo.png" alt=""></a>
-            <!-- Navbar Toggler -->
-            <div class="classy-navbar-toggler">
-                <span class="navbarToggler"><span></span><span></span><span></span></span>
-            </div>
-            <!-- Menu -->
-            <div class="classy-menu">
-                <!-- close btn -->
-                <div class="classycloseIcon">
-                    <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                </div>
-                <!-- Nav Start -->
-                <div class="classynav">
-                    <ul>
-                        <li sec:authorize="!isAnonymous()">
-                            <a href="#">
-                                <span sec:authentication="name"></span>
-                            </a>
-                            <div class="megamenu">
-                                <ul class="single-mega cn-col4">
-                                    <li class="title" sec:authentication="name"></li>
-                                    <li><a th:href="@{/logout}">Logout</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#">Shop</a>
-                            <div class="megamenu">
-                                <ul class="single-mega cn-col-4">
-                                    <li class="title">Collection one</li>
-                                    <li><a th:href="@{~/collection(group=1,col=1)}">Class One</a></li>
-                                    <li><a th:href="@{~/collection(group=1,col=2)}">Class Two</a></li>
-                                    <li><a th:href="@{~/collection(group=1,col=3)}">Class Three</a></li>
-                                </ul>
-                                <ul class="single-mega cn-col-4">
-                                    <li class="title">Collection Two</li>
-                                    <li><a th:href="@{~/collection(group=2,col=1)}">Class One</a></li>
-                                    <li><a th:href="@{~/collection(group=2,col=2)}">Class Two</a></li>
-                                    <li><a th:href="@{~/collection(group=2,col=3)}">Class Three</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li><a th:href="@{~/about}">About</a></li>
-                    </ul>
-                </div>
-                <!-- Nav End -->
-            </div>
-        </nav>
-
-        <!-- Header Meta Data -->
-        <div class="header-meta d-flex clearfix justify-content-end">
-            <!-- Search Area -->
-            <div class="search-area">
-                <form action="/search" method="post">
-                    <input type="search" name="search" id="headerSearch" placeholder="Search">
-                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </form>
-            </div>
-            <!-- Favourite Area -->
-            <div class="favourite-area">
-                <a th:href="@{~/cart}"
-                   data-toggle="tooltip" data-placement="bottom" title="Bag">
-                    <img src="img/core-img/bag.svg" alt="">
-                </a>
-            </div>
-            <!-- User Login Info -->
-            <div class="user-login-info">
-                <a sec:authorize="!isAnonymous()" href="#">
-                    <img th:src="*{'/user/profile/?username='+user.getUserName()}" alt="">
-
-                </a>
-                <span sec:authorize="isAnonymous()">
-                    <a th:href="@{/login}"
-                       data-toggle="tooltip" data-placement="bottom" title="Login">
-                        <img src="img/core-img/user.svg" alt="">
+    <!-- ##### Header Area Start ##### -->
+    <header class="header_area">
+        <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
+            <ul>
+                <li sec:authorize="!isAnonymous()">
+                    <a href="/logout">
+                        <span th:inline="text">Cerrar Sesión [[${#httpServletRequest.remoteUser}]]</span>
                     </a>
-                </span>
+                </li>
+                <li><a th:href="@{~/}">Home</a></li>
+                <li><a th:href="@{~/about}">About</a></li>
+                <a th:href="@{~/cart}">Carrito</a>
+            </ul>
+
+            <div>
+                <div>
+                    <form action="/search" method="post">
+                        <input type="search" name="search" id="headerSearch" placeholder="Search">
+                        <button type="submit">Buscar</button>
+                    </form>
+                </div>
+                <h1 th:inline="text">[[${#httpServletRequest.remoteUser}]]</h1>
+
+                <div>
+                    <a sec:authorize="!isAnonymous()">
+                        <img th:src="@{/user/profile/(username=${#httpServletRequest.remoteUser})}"></img>
+                    </a>
+                    <span sec:authorize="isAnonymous()">
+                        <a th:href="@{/login}">
+                            Login
+                        </a>
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
-</header>
-<!-- ##### Header Area End ##### -->
+    </header>
 
-<div th:replace="${template}"></div>
+    <div th:replace="${template}"></div>
 
 </body>
+
 </html>

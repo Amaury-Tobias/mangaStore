@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 
-<html lang="es"
-      xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/template :: layout (~{::body}, 'About')}">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/template :: layout (~{::body}, 'About')}">
 
 <body>
-<main class="container">
-    <h1 class="center-align">About</h1>
-    <p class="center-align">lorem ipsum</p>
+    <div>
+        <h1>About</h1>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus alias reprehenderit magnam voluptate, repellendus explicabo quis totam ducimus accusamus. Dolorum voluptates voluptatum non et quidem consectetur amet unde perferendis quas?</p>
+    </div>
 
-</main>
-
-<footer th:replace="~{fragments/footer}"></footer>
 </body>
+
 </html>
