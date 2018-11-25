@@ -20,13 +20,19 @@ public class ItemController {
     @Autowired
     ItemJDBCTemplate itemJDBCTemplate;
 
-    @GetMapping("/items")
-    public ModelAndView getItems(@RequestParam(value = "clase", defaultValue = "all") String clase) {
+    @GetMapping(value = "/items")
+    public ModelAndView getItems(@RequestParam(value = "clase", defaultValue = "all") String category) {
         ModelAndView model = new ModelAndView();
-        List<Item> items = itemJDBCTemplate.findAll();
-        model.addObject("items", items);
-        model.addObject("clase", clase);
-        model.setViewName("items");
+        if (category.equals("all")) {
+            List<Item> items = itemJDBCTemplate.findAll();
+            model.addObject("items", items);
+            model.setViewName("items");
+        } else {
+            List<Item> items = itemJDBCTemplate.findAllCategory(category);
+            model.addObject("items", items);
+            model.setViewName("items");
+        }
+        model.addObject("category", category);
         return model;
     }
 

@@ -36,10 +36,29 @@ public class ItemJDBCTemplate implements JDBCTemplateInt<Item> {
                 item.setSearchedTimes(rs.getInt("searchedTimes"));
                 item.setSearchedTimes(rs.getInt("viewedTimes"));
 
-                //item.setPicture1(rs.getBytes("picture1"));
-                //item.setPicture2(rs.getBytes("picture2"));
-                //item.setPicture2(rs.getBytes("picture3"));
+                // item.setPicture1(rs.getBytes("picture1"));
+                // item.setPicture2(rs.getBytes("picture2"));
+                // item.setPicture2(rs.getBytes("picture3"));
 
+                return item;
+            }
+        });
+        return items;
+    }
+
+    public List<Item> findAllCategory(String category) {
+        String sql = "SELECT * FROM item WHERE category LIKE '%"+ category +"%'";
+        List<Item> items = jdbcTemplate.query(sql, new RowMapper<Item>() {
+            @Override
+            public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Item item = new Item();
+                item.setId(rs.getInt("id"));
+                item.setName(rs.getString("name"));
+                item.setDescription(rs.getString("description"));
+                item.setPrice(rs.getFloat("price"));
+                item.setValoration(rs.getInt("valoration"));
+                item.setSearchedTimes(rs.getInt("searchedTimes"));
+                item.setSearchedTimes(rs.getInt("viewedTimes"));
                 return item;
             }
         });

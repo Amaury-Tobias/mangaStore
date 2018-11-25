@@ -11,9 +11,11 @@
             <div class="col-lg-3">
                 <h1 class="my-4">HomePage</h1>
                 <div class="list-group">
-                    <a href="#" class="list-group-item">Categoria 1</a>
-                    <a href="#" class="list-group-item">Categoria 2</a>
-                    <a href="#" class="list-group-item">Categoria 3</a>
+                    <a th:href="@{~/items?clase=accion}" class="list-group-item">Acción</a>
+                    <a th:href="@{~/items?clase=aventura}" class="list-group-item">Aventura</a>
+                    <a th:href="@{~/items?clase=comedia}" class="list-group-item">Comedia</a>
+                    <a th:href="@{~/items?clase=drama}" class="list-group-item">Drama</a>
+                    <a th:href="@{~/items?clase=terror}" class="list-group-item">Terror</a>
                 </div>
             </div>
             <!-- /.col-lg-3 -->

@@ -9,6 +9,7 @@ public class Item {
     private int valoration;
     private int searchedTimes;
     private int viewedTimes;
+    private String category;
 
     private byte[] picture1;
     private byte[] picture2;
@@ -17,6 +18,14 @@ public class Item {
 
     public int getId() {
         return id;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getVideoPath() {
