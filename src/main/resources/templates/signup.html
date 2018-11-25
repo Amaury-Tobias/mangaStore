@@ -16,32 +16,35 @@
                                     role="alert"></div>
                             </div>
                             <div class="form-group">
-                                <input required th:field="*{userName}" placeholder="Username" type="text" class="form-control">
+                                <input required th:field="*{userName}" placeholder="Nombre de Usuario" type="text"
+                                    class="form-control">
                             </div>
                             <div class="form-group">
                                 <input title="8 caracteres 'a-z' una mayuscula y un numero" pattern="^(?:(?=.*[a-z])(?:(?=.*[A-Z])(?=.*[\d\W])|(?=.*\W)(?=.*\d))|(?=.*\W)(?=.*[A-Z])(?=.*\d)).{8,}$"
-                                    required th:field="*{password}" placeholder="Password" type="password" class="form-control">
+                                    required th:field="*{password}" placeholder="Contraseña" type="password" class="form-control">
                             </div>
                             <div class="form-group">
-                                <input required th:field="*{email}" placeholder="Email" type="email" class="form-control">
+                                <input required th:field="*{email}" placeholder="Correo Electronico" type="email" class="form-control">
                             </div>
                             <div class="form-group">
-                                <input required th:field="*{name}" placeholder="Name" type="text" class="form-control">
+                                <input required th:field="*{name}" placeholder="Nombre" type="text" class="form-control">
                             </div>
                             <div class="form-group">
-                                <input required th:field="*{lastName}" placeholder="LastName" type="text" class="form-control">
+                                <input required th:field="*{lastName}" placeholder="Apellido" type="text" class="form-control">
                             </div>
                             <div class="form-group">
-                                <input th:field="*{phone}" placeholder="Phone" type="text" class="form-control">
+                                <input th:field="*{phone}" placeholder="Teléfono" type="text" class="form-control">
                             </div>
                             <div class="form-group">
-                                <input th:field="*{address}" placeholder="Address" type="text" class="form-control">
+                                <input th:field="*{address}" placeholder="Dirección" type="text" class="form-control">
                             </div>
                             <div class="form-group">
-                                <input name="avatar1" placeholder="Avatar" type="file" class="form-control">
+                                <label for="avatarFile">Imágen de Avatar</label>
+                                <input id="avatarFile" name="avatar1" placeholder="Avatar" type="file" class="form-control">
                             </div>
                             <div class="form-group">
-                                <input name="cover1" placeholder="Cover" type="file" class="form-control">
+                                <label for="coverFile">Imágen de Portada</label>
+                                <input id="coverFile" name="cover1" placeholder="Cover" type="file" class="form-control">
                             </div>
 
                             <div class="form-group">

@@ -48,15 +48,14 @@
                 </div>
 
                 <h3>Otros Articulos</h3>
-                Filtrar por:
-                <div class="Filter">
-                    <select class="selectpicker" data-style="btn-danger" id="order" name="order" tabindex="-98">
-                        <option value="Selled" selected="selected">Mas Vendidos</option>
-                        <option value="Viewed">Mas Vistos</option>
-                        <option value="Searched">Mas Buscados</option>
-                        <option value="Calificated">Mejor Calificados</option>
-                    </select>
-                </div>
+                
+                <h4>Filtrar por:</h4>
+                <select class="selectpicker" data-style="btn-danger" id="order" name="order" tabindex="-98">
+                    <option value="Selled" selected="selected">Mas Vendidos</option>
+                    <option value="Viewed">Mas Vistos</option>
+                    <option value="Searched">Mas Buscados</option>
+                    <option value="Calificated">Mejor Calificados</option>
+                </select>
 
                 <div class="row">
                     <!--FOR-->
@@ -67,7 +66,7 @@
                             </a>
                             <div class="card-body">
                                 <h4 class="card-title">
-                                        <a th:text="${item.name}" th:href="@{~/item(id=${item.id})}"></a>
+                                    <a th:text="${item.name}" th:href="@{~/item(id=${item.id})}"></a>
                                 </h4>
                                 <h5 th:text="${'$ '+item.price}"></h5>
                                 <p class="card-text" th:text="${item.description}"></p>
