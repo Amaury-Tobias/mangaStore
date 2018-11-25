@@ -1,10 +1,12 @@
 package com.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import models.item.Item;
+import models.item.ItemJDBCTemplate;
 import user.User;
 import user.UserJDBCTemplate;
 
@@ -25,11 +29,16 @@ public class DefaultController {
 
     @Autowired
     UserJDBCTemplate userJDBCTemplate;
+    @Autowired
+    ItemJDBCTemplate itemJDBCTemplate;
 
     @GetMapping("/")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView index() {
         ModelAndView model = new ModelAndView();
         User user = userJDBCTemplate.getUser("admin");
+        List<Item> items = itemJDBCTemplate.findhighlights();
+        model.addObject("items", items);
         model.addObject("user", user);
         model.setViewName("index");
         return model;
@@ -57,7 +66,7 @@ public class DefaultController {
     }
 
     @GetMapping("/signup")
-    public String users(Model model){
+    public String users(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "signup";
@@ -65,15 +74,13 @@ public class DefaultController {
 
     @PostMapping("/signup")
     public ModelAndView createUser(@Valid User user, BindingResult result,
-                                   @RequestParam("avatar1")MultipartFile avatar,
-                                   @RequestParam("cover1")MultipartFile cover) {
+            @RequestParam("avatar1") MultipartFile avatar, @RequestParam("cover1") MultipartFile cover) {
         ModelAndView model = new ModelAndView();
         model.addObject("user", user);
         model.setViewName(result.hasErrors() ? "signup" : "index");
-        if (!result.hasErrors()){
+        if (!result.hasErrors()) {
             try {
-                if (!avatar.isEmpty() & !cover.isEmpty())
-                {
+                if (!avatar.isEmpty() & !cover.isEmpty()) {
                     user.setAvatar(avatar.getBytes());
                     user.setCover(cover.getBytes());
                 }

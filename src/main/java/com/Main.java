@@ -10,6 +10,8 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import models.item.ItemJDBCTemplate;
 import user.UserJDBCTemplate;
 
 @SpringBootApplication
@@ -62,6 +64,12 @@ public class Main {
     UserJDBCTemplate userJDBCTemplate()
     {
         return new UserJDBCTemplate();
+    }
+
+    @Bean
+    ItemJDBCTemplate itemJDBCTemplate()
+    {
+        return new ItemJDBCTemplate();
     }
 
 }
