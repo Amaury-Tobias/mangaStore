@@ -46,8 +46,7 @@ public class DefaultController {
 
     @GetMapping("/user/profile")
     public @ResponseBody byte[] getImageAvatar(@RequestParam("username") String username) {
-        User user = userJDBCTemplate.getUser(username);
-        return user.getAvatar();
+        return userJDBCTemplate.getUser(username).getAvatar();
     }
 
     @GetMapping("/about")
