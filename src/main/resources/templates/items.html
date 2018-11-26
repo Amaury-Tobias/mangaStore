@@ -26,6 +26,7 @@
                         </h4>
                         <p class="card-text" th:text="${item.description}">
                         </p>
+                        <a tf:if="${item.owner == #httpServletRequest.remoteUser}" th:href="@{~/deleteItem(id=${item.id})}">Eliminar</a>
                     </div>
                 </div>
             </div>
