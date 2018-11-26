@@ -46,6 +46,17 @@ public class ItemJDBCTemplate implements JDBCTemplateInt<Item> {
         return items;
     }
 
+    public void addToCart(int id, String user) {
+        String sql = "INSERT INTO cart VALUES(?,?)";
+        Object[] params = new Object[] { user, id };
+        jdbcTemplate.update(sql, params);
+    }
+
+    public void removeCart(int id, String user) {
+        String sql = "DELETE FROM cart WHERE idUser LIKE \"%"+user+"%\" AND idItem = " + id;
+        jdbcTemplate.update(sql);
+    }
+
     public List<Item> findAllCategory(String category) {
         String sql = "SELECT * FROM item WHERE category LIKE '%" + category + "%' AND active = 1";
         List<Item> items = jdbcTemplate.query(sql, new RowMapper<Item>() {
@@ -94,6 +105,26 @@ public class ItemJDBCTemplate implements JDBCTemplateInt<Item> {
         jdbcTemplate.update(sql, params);
     }
 
+    public List<Item> getCartItems(String user) {
+        String sql = "SELECT item.* FROM item INNER JOIN cart ON item.id = cart.idItem AND cart.idUser LIKE '%" + user
+                + "%'";
+        List<Item> items = jdbcTemplate.query(sql, new RowMapper<Item>() {
+            @Override
+            public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Item item = new Item();
+                item.setId(rs.getInt("id"));
+                item.setName(rs.getString("name"));
+                item.setDescription(rs.getString("description"));
+                item.setPrice(rs.getFloat("price"));
+                item.setValoration(rs.getInt("valoration"));
+                item.setSearchedTimes(rs.getInt("searchedTimes"));
+                item.setSearchedTimes(rs.getInt("viewedTimes"));
+                return item;
+            }
+        });
+        return items;
+    }
+
     public Item getItemImage(int id) {
         String sql = "SELECT * FROM item WHERE id = ?";
         if (id == 0) {
@@ -113,7 +144,7 @@ public class ItemJDBCTemplate implements JDBCTemplateInt<Item> {
 
     public Item getItemById(int id) {
         String sql = "SELECT item.*, AVG(comment.valoration) AS rate FROM item JOIN comment ON item.id = ? AND comment.idItem = ? GROUP BY item.id";
-        
+
         if (id == 0) {
             return new Item();
         }

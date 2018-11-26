@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/template :: layout (~{::body}, 'Carrito de Compras')}">
+
+<body>
+    <div class="container">
+        <h1 class="my-4">Carrito
+            <small>agregados</small>
+        </h1>
+
+        <!-- Project One -->
+        <div th:each="item : ${items}">
+            <div class="row">
+                <div class="col-md-7">
+                    <a th:href="@{~/item(id=${item.id})}">
+                        <img style="max-height: 200px;" class="img-fluid rounded mb-3 mb-md-0" th:src="@{~/item/image(id=${item.id}, pos=1)}">
+                    </a>
+                </div>
+                <div class="col-md-5">
+                    <h3 th:text="${item.name}">Project One</h3>
+                    <p th:text="${item.description}"></p>
+                    <p th:text="${'$ '+item.price}"></p>
+                    <a class="btn btn-primary" th:text="${item.name}"
+                    th:href="@{~/item(id=${item.id})}"></a>
+                    <a class="btn btn-danger" th:href="@{~/removeCart(id=${item.id})}">
+                        Eliminar
+                    </a>
+                </div>
+            </div>
+            <hr>
+        </div>
+
+
+    </div>
+</body>
+
+</html>

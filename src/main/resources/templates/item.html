@@ -25,7 +25,7 @@
               <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
               <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
             </ol>
-            <div class="carousel-inner" role="listbox">
+            <div style="max-height: 500px;" class="carousel-inner col-xs-1 center-block" role="listbox">
               <div class="carousel-item active">
                 <img class="d-block img-fluid" th:src="@{~/item/image(id=${item.id}, pos=1)}">
               </div>
@@ -68,7 +68,7 @@
               <option>Efectivo</option>
               <option>Tarjeta</option>
             </select>
-            <input class="btn btn-secondary btn-block btn-sm" value="Comprar" type="button">
+            <a class="btn btn-secondary btn-block btn-sm" th:href="@{~/addCart(id=${item.id})}">Comprar</a>
 
           </div>
         </div>
@@ -84,6 +84,11 @@
               </p>
               <small class="text-muted" th:text="${'Comentario de: ' + comment.author + ' el: ' + comment.date }">
               </small>
+              <div class="image_outer_container">
+                  <div class="image_inner_container">
+                      <img th:src="@{/user/profile/(username=${comment.author})}">
+                  </div>
+              </div>
               <hr>
             </div>
 
