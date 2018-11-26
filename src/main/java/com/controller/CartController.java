@@ -3,8 +3,6 @@ package com.controller;
 import java.security.Principal;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
@@ -47,10 +45,36 @@ public class CartController {
 
     @GetMapping("/removeCart")
     @PreAuthorize("!isAnonymous()")
-    public String removeCart(Principal principal,  @RequestParam(value = "id", defaultValue = "0") int id) {
+    public String removeCart(Principal principal, @RequestParam(value = "id", defaultValue = "0") int id) {
         String user = principal.getName();
         itemJDBCTemplate.removeCart(id, user);
         return "redirect:/cart";
+    }
+
+    @GetMapping("/pay")
+    @PreAuthorize("!isAnonymous()")
+    public ModelAndView pay(Principal principal) {
+        ModelAndView model = new ModelAndView();
+
+        String user = principal.getName();
+        List<Item> items = itemJDBCTemplate.getCartItems(user);
+        float total = 0;
+        for (Item item : items) {
+            total += item.getPrice();
+        }
+        model.addObject("items", items);
+        model.addObject("total", total);
+        model.setViewName("bill");
+
+        return model;
+    }
+
+    @GetMapping("/checkout")
+    @PreAuthorize("!isAnonymous()")
+    public String checkout(Principal principal) {
+        String user = principal.getName();
+        itemJDBCTemplate.checkout(user);
+        return "redirect:/";
     }
 
 }

@@ -50,7 +50,7 @@
                 </div>
 
                 <h3>Otros Articulos</h3>
-                
+
                 <h4>Filtrar por:</h4>
                 <select class="selectpicker" data-style="btn-danger" id="order" name="order" tabindex="-98">
                     <option value="Selled" selected="selected">Mas Vendidos</option>
@@ -74,10 +74,10 @@
                                 <p class="card-text" th:text="${item.description}"></p>
                             </div>
                             <div class="card-footer">
-                                <small class="text-muted" th:each="subItem : ${item.valoration}">
-                                    <!--FOR item.val-->
-                                    &#9733; &#9733; &#9733; &#9733; &#9734;.
-                                    <!--ENDFOR item.val-->
+                                <small class="text-muted">
+                                    <span th:each="number: ${#numbers.sequence(1, item.valoration)}">
+                                        &#9733;
+                                    </span>
                                 </small>
                             </div>
                         </div>

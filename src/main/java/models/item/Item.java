@@ -12,6 +12,8 @@ public class Item {
     private String category;
     private boolean active;
 
+    private String owner;
+
     private byte[] picture1;
     private byte[] picture2;
     private byte[] picture3;
@@ -19,6 +21,20 @@ public class Item {
 
     public int getId() {
         return id;
+    }
+
+    /**
+     * @return the owner
+     */
+    public String getOwner() {
+        return owner;
+    }
+
+    /**
+     * @param owner the owner to set
+     */
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     /**

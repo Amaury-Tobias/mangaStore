@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/template :: layout (~{::body}, 'Recibo de Compra')}">
+
+<body>
+
+    <div class="container">
+
+        <!-- Page Heading -->
+        <h1 class="my-4">MANGASTORE</h1>
+        <h3 class="my-4">Recibo de Compra</h3>
+
+        <!-- Project One -->
+        <div class="row" th:each="item : ${items}">
+            <div class="col-md-5">
+                <h5 th:text="${item.name}"></h5>
+                <p th:text="${item.description}"></p>
+                <p th:text="${'$ ' + item.price}"></p>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <a class="btn btn-primary" th:href="@{~/checkout}" th:text="${'Terminar Compra ($ ' + total + ')' }" >Terminar Compra</a>
+    </div>
+
+</body>
+
+</html>

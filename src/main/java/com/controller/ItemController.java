@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +78,6 @@ public class ItemController {
         return image;
     }
 
-
     @GetMapping("/createItem")
     @PreAuthorize("!isAnonymous()")
     public ModelAndView createItem() {
@@ -89,14 +89,29 @@ public class ItemController {
     }
 
     @PostMapping("/addItem")
-    public String addItem(Item item, @RequestParam("img1") MultipartFile img1,
-    @RequestParam("img2") MultipartFile img2, @RequestParam("img3") MultipartFile img3) throws IOException {
-        
+    public String addItem(Principal principal, Item item, @RequestParam("img1") MultipartFile img1, @RequestParam("img2") MultipartFile img2,
+            @RequestParam("img3") MultipartFile img3) throws IOException {
+
+        String user = principal.getName();
         item.setPicture1(img1.getBytes());
         item.setPicture2(img2.getBytes());
         item.setPicture3(img3.getBytes());
-        itemJDBCTemplate.create(item);
+        itemJDBCTemplate.create(item, user);
 
         return "redirect:/";
+    }
+
+    @GetMapping("/search")
+    public ModelAndView search(
+        @RequestParam(value = "textSearch", defaultValue = "") String textSearch) {
+        ModelAndView model = new ModelAndView();
+
+        List<Item> items = itemJDBCTemplate.search(textSearch);
+        
+        model.addObject("category", textSearch);
+        model.addObject("items", items);
+        model.setViewName("items");
+
+        return model;
     }
 }
