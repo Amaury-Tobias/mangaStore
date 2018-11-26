@@ -43,7 +43,7 @@ public class Main {
         }
     }
 */
-    //@Value("${spring.datasource.url}")
+    @Value("${spring.datasource.url}")
     private String dbUrl = "jdbc:mysql://vahf5voe2w0xln5z:osenmng86mplly41@yhrz9vns005e0734.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/mxbrv4djh5ub33r4";
 
     @Bean
