@@ -74,7 +74,7 @@
                                 <p class="card-text" th:text="${item.description}"></p>
                             </div>
                             <div class="card-footer">
-                                <small class="text-muted">
+                                <small class="text-muted" th:each="subItem : ${item.valoration}">
                                     <!--FOR item.val-->
                                     &#9733; &#9733; &#9733; &#9733; &#9734;.
                                     <!--ENDFOR item.val-->

@@ -11,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import models.comment.CommentJDBCTemplate;
 import models.item.ItemJDBCTemplate;
 import user.UserJDBCTemplate;
 
@@ -70,6 +71,11 @@ public class Main {
     ItemJDBCTemplate itemJDBCTemplate()
     {
         return new ItemJDBCTemplate();
+    }
+
+    @Bean
+    CommentJDBCTemplate commentJDBCTemplate(){
+        return new CommentJDBCTemplate();
     }
 
 }

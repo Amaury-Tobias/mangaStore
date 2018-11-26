@@ -47,7 +47,7 @@ public class ItemJDBCTemplate implements JDBCTemplateInt<Item> {
     }
 
     public List<Item> findAllCategory(String category) {
-        String sql = "SELECT * FROM item WHERE category LIKE '%"+ category +"%'";
+        String sql = "SELECT * FROM item WHERE category LIKE '%" + category + "%'";
         List<Item> items = jdbcTemplate.query(sql, new RowMapper<Item>() {
             @Override
             public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -87,6 +87,7 @@ public class ItemJDBCTemplate implements JDBCTemplateInt<Item> {
 
     public void create(Item item) {
         String sql = "INSERT INTO item VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+
         Object[] params = new Object[] { 0, item.getName(), item.getDescription(), item.getPrice(),
                 item.getValoration(), item.getSearchedTimes(), item.getViewedTimes(), item.getPicture1(),
                 item.getPicture2(), item.getPicture3(), item.getVideoPath() };
@@ -105,6 +106,29 @@ public class ItemJDBCTemplate implements JDBCTemplateInt<Item> {
                 item.setPicture1(rs.getBytes("picture1"));
                 item.setPicture2(rs.getBytes("picture2"));
                 item.setPicture3(rs.getBytes("picture3"));
+                return item;
+            }
+        });
+    }
+
+    public Item getItemById(int id) {
+        String sql = "SELECT item.*, AVG(comment.valoration) AS rate FROM item JOIN comment ON item.id = ? AND comment.idItem = ? GROUP BY item.id";
+        
+        if (id == 0) {
+            return new Item();
+        }
+        return jdbcTemplate.queryForObject(sql, new Object[] { id, id }, new RowMapper<Item>() {
+            @Override
+            public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Item item = new Item();
+                item.setId(rs.getInt("id"));
+                item.setName(rs.getString("name"));
+                item.setDescription(rs.getString("description"));
+                item.setPrice(rs.getFloat("price"));
+                item.setValoration(rs.getInt("rate"));
+                item.setSearchedTimes(rs.getInt("searchedTimes"));
+                item.setSearchedTimes(rs.getInt("viewedTimes"));
+                item.setCategory(rs.getString("category"));
                 return item;
             }
         });
