@@ -30,14 +30,29 @@ public class ItemController {
     CommentJDBCTemplate commentJDBCTemplate;
 
     @GetMapping(value = "/items")
-    public ModelAndView getItems(@RequestParam(value = "clase", defaultValue = "all") String category) {
+    public ModelAndView getItems(Principal principal,
+            @RequestParam(value = "clase", defaultValue = "all") String category) {
         ModelAndView model = new ModelAndView();
         if (category.equals("all")) {
             List<Item> items = itemJDBCTemplate.findAll();
+            for (Item item : items) {
+                if (principal.getName().equals(item.getOwner())) {
+                    item.setOwnerBool(true);
+                } else {
+                    item.setOwnerBool(false);
+                }
+            }
             model.addObject("items", items);
             model.setViewName("items");
         } else {
             List<Item> items = itemJDBCTemplate.findAllCategory(category);
+            for (Item item : items) {
+                if (principal.getName().equals(item.getOwner())) {
+                    item.setOwnerBool(true);
+                } else {
+                    item.setOwnerBool(false);
+                }
+            }
             model.addObject("items", items);
             model.setViewName("items");
         }
@@ -89,8 +104,8 @@ public class ItemController {
     }
 
     @PostMapping("/addItem")
-    public String addItem(Principal principal, Item item, @RequestParam("img1") MultipartFile img1, @RequestParam("img2") MultipartFile img2,
-            @RequestParam("img3") MultipartFile img3) throws IOException {
+    public String addItem(Principal principal, Item item, @RequestParam("img1") MultipartFile img1,
+            @RequestParam("img2") MultipartFile img2, @RequestParam("img3") MultipartFile img3) throws IOException {
 
         String user = principal.getName();
         item.setPicture1(img1.getBytes());
@@ -102,12 +117,11 @@ public class ItemController {
     }
 
     @GetMapping("/search")
-    public ModelAndView search(
-        @RequestParam(value = "textSearch", defaultValue = "") String textSearch) {
+    public ModelAndView search(@RequestParam(value = "textSearch", defaultValue = "") String textSearch) {
         ModelAndView model = new ModelAndView();
 
         List<Item> items = itemJDBCTemplate.search(textSearch);
-        
+
         model.addObject("category", textSearch);
         model.addObject("items", items);
         model.setViewName("items");
