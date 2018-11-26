@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
@@ -35,24 +37,12 @@ public class ItemController {
         ModelAndView model = new ModelAndView();
         if (category.equals("all")) {
             List<Item> items = itemJDBCTemplate.findAll();
-            for (Item item : items) {
-                if (principal.getName().equals(item.getOwner())) {
-                    item.setOwnerBool(true);
-                } else {
-                    item.setOwnerBool(false);
-                }
-            }
+
             model.addObject("items", items);
             model.setViewName("items");
         } else {
             List<Item> items = itemJDBCTemplate.findAllCategory(category);
-            for (Item item : items) {
-                if (principal.getName().equals(item.getOwner())) {
-                    item.setOwnerBool(true);
-                } else {
-                    item.setOwnerBool(false);
-                }
-            }
+
             model.addObject("items", items);
             model.setViewName("items");
         }
@@ -101,6 +91,36 @@ public class ItemController {
         model.addObject("item", item);
         model.setViewName("crateItem");
         return model;
+    }
+
+    @GetMapping("/editItem")
+    @PreAuthorize("!isAnonymous()")
+    public ModelAndView editItem(@RequestParam(value = "id", defaultValue = "") int id) {
+        ModelAndView model = new ModelAndView();
+        Item item = itemJDBCTemplate.getItemById(id);
+        model.addObject("item", item);
+        model.setViewName("editItem");
+        return model;
+    }
+
+    @PostMapping("/editItem")
+    public String editItem(Item item, @RequestParam("img1") MultipartFile img1,
+            @RequestParam("img2") MultipartFile img2, @RequestParam("img3") MultipartFile img3) throws IOException {
+
+        item.setPicture1(img1.getBytes());
+        item.setPicture2(img2.getBytes());
+        item.setPicture3(img3.getBytes());
+        itemJDBCTemplate.update(item);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/deleteItem")
+    @PreAuthorize("!isAnonymous()")
+    public String deleteItem(HttpServletRequest request, @RequestParam(value = "id", defaultValue = "") int id) {
+        itemJDBCTemplate.deleteItem(id);
+        String referer = request.getHeader("Referer");
+        return "redirect:" + referer;
     }
 
     @PostMapping("/addItem")

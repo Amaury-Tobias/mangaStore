@@ -37,7 +37,6 @@ public class ItemJDBCTemplate implements JDBCTemplateInt<Item> {
                 item.setSearchedTimes(rs.getInt("viewedTimes"));
                 item.setOwner(rs.getString("owner"));
 
-
                 // item.setPicture1(rs.getBytes("picture1"));
                 // item.setPicture2(rs.getBytes("picture2"));
                 // item.setPicture2(rs.getBytes("picture3"));
@@ -111,6 +110,15 @@ public class ItemJDBCTemplate implements JDBCTemplateInt<Item> {
 
     }
 
+    public void update(Item item) {
+        String sql = "UPDATE item SET name=?, description=?, category=?, price=?, picture1=?, picture2=?, picture3=?, active=? WHERE id=?";
+
+        Object[] params = new Object[] { item.getName(), item.getDescription(), item.getCategory(), item.getPrice(),
+                item.getPicture1(), item.getPicture2(), item.getPicture3(), item.isActive(), item.getId() };
+        jdbcTemplate.update(sql, params);
+
+    }
+
     public List<Item> getCartItems(String user) {
         String sql = "SELECT item.* FROM item INNER JOIN cart ON item.id = cart.idItem AND cart.idUser LIKE '%" + user
                 + "%'";
@@ -176,9 +184,8 @@ public class ItemJDBCTemplate implements JDBCTemplateInt<Item> {
     }
 
     public List<Item> search(String category) {
-        String sql = "SELECT * FROM item WHERE " 
-        + "name LIKE '%" + category + "%' OR description LIKE '%" + category
-        + "%' AND active = 1";
+        String sql = "SELECT * FROM item WHERE " + "name LIKE '%" + category + "%' OR description LIKE '%" + category
+                + "%' AND active = 1";
 
         List<Item> items = jdbcTemplate.query(sql, new RowMapper<Item>() {
             @Override
@@ -200,6 +207,11 @@ public class ItemJDBCTemplate implements JDBCTemplateInt<Item> {
 
     public void checkout(String user) {
         String sql = "DELETE FROM cart WHERE idUser LIKE \"%" + user + "%\"";
+        jdbcTemplate.update(sql);
+    }
+
+    public void deleteItem(int id) {
+        String sql = "DELETE FROM item WHERE id = " + id;
         jdbcTemplate.update(sql);
     }
 }

@@ -26,7 +26,10 @@
                         </h4>
                         <p class="card-text" th:text="${item.description}"></p>
                         <span sec:authorize="!isAnonymous()">
-                            <a th:if="${item.owner == #httpServletRequest.remoteUser}" th:href="@{~/deleteItem(id=${item.id})}">Eliminar</a>
+                            <span th:if="${item.owner == #httpServletRequest.remoteUser}">
+                                <a th:href="@{~/deleteItem(id=${item.id})}">Eliminar</a>
+                                <a th:href="@{~/editItem(id=${item.id})}">Editar</a>
+                            </span>
                         </span>
                     </div>
                 </div>

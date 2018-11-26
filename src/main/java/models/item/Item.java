@@ -13,7 +13,6 @@ public class Item {
     private boolean active;
 
     private String owner;
-    private boolean ownerBool;
 
     private byte[] picture1;
     private byte[] picture2;
@@ -22,20 +21,6 @@ public class Item {
 
     public int getId() {
         return id;
-    }
-
-    /**
-     * @return the ownerBool
-     */
-    public boolean isOwnerBool() {
-        return ownerBool;
-    }
-
-    /**
-     * @param ownerBool the ownerBool to set
-     */
-    public void setOwnerBool(boolean ownerBool) {
-        this.ownerBool = ownerBool;
     }
 
     /**
