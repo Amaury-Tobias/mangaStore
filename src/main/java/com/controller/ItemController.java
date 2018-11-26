@@ -1,13 +1,17 @@
 package com.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import models.comment.Comment;
@@ -71,5 +75,28 @@ public class ItemController {
             break;
         }
         return image;
+    }
+
+
+    @GetMapping("/createItem")
+    @PreAuthorize("!isAnonymous()")
+    public ModelAndView createItem() {
+        ModelAndView model = new ModelAndView();
+        Item item = new Item();
+        model.addObject("item", item);
+        model.setViewName("crateItem");
+        return model;
+    }
+
+    @PostMapping("/addItem")
+    public String addItem(Item item, @RequestParam("img1") MultipartFile img1,
+    @RequestParam("img2") MultipartFile img2, @RequestParam("img3") MultipartFile img3) throws IOException {
+        
+        item.setPicture1(img1.getBytes());
+        item.setPicture2(img2.getBytes());
+        item.setPicture3(img3.getBytes());
+        itemJDBCTemplate.create(item);
+
+        return "redirect:/";
     }
 }

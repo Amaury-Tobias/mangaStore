@@ -23,7 +23,7 @@ public class ItemJDBCTemplate implements JDBCTemplateInt<Item> {
 
     @Override
     public List<Item> findAll() {
-        String sql = "SELECT * FROM item";
+        String sql = "SELECT * FROM item WHERE active = 1";
         List<Item> items = jdbcTemplate.query(sql, new RowMapper<Item>() {
             @Override
             public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -47,7 +47,7 @@ public class ItemJDBCTemplate implements JDBCTemplateInt<Item> {
     }
 
     public List<Item> findAllCategory(String category) {
-        String sql = "SELECT * FROM item WHERE category LIKE '%" + category + "%'";
+        String sql = "SELECT * FROM item WHERE category LIKE '%" + category + "%' AND active = 1";
         List<Item> items = jdbcTemplate.query(sql, new RowMapper<Item>() {
             @Override
             public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -86,11 +86,11 @@ public class ItemJDBCTemplate implements JDBCTemplateInt<Item> {
     }
 
     public void create(Item item) {
-        String sql = "INSERT INTO item VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO item VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        Object[] params = new Object[] { 0, item.getName(), item.getDescription(), item.getPrice(),
+        Object[] params = new Object[] { 0, item.getName(), item.getDescription(), item.getCategory(), item.getPrice(),
                 item.getValoration(), item.getSearchedTimes(), item.getViewedTimes(), item.getPicture1(),
-                item.getPicture2(), item.getPicture3(), item.getVideoPath() };
+                item.getPicture2(), item.getPicture3(), "", item.isActive() };
         jdbcTemplate.update(sql, params);
     }
 

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/template :: layout (~{::body}, 'Item')}">
+
+<body>
+    <br>
+    <section class="new_arrivals_area section-padding-80 clearfix" style="background-image: url(img/bg-img/bg-1.jpg);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="hero-content">
+                        <h2>Vender Articulo</h2>
+                        <form th:action="@{~/addItem}" method="post" th:object="${item}" enctype="multipart/form-data">
+
+                            <div class="form-group">
+                                <input class="form-control" type="text" required th:field="*{name}" placeholder="¿Que vaz a vender hoy?">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" required th:field="*{description}" placeholder="Escribe una pequeña descripción.">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="number" required th:field="*{price}" placeholder="Precio $$$">
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" required th:field="*{category}">
+                                    <option value="accion">Acción</option>
+                                    <option value="aventura">Aventura</option>
+                                    <option value="comedia">Comedia</option>
+                                    <option value="drama">Drama</option>
+                                    <option value="terror">Terror</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group form-check">
+                                <input id="active" type="checkbox" class="form-check-input" th:field="*{active}">
+                                <label class="form-check-label" for="active">Disponible para Venta</label>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="img1">Imágen Principal</label>
+                                <input id="img1" name="img1" type="file" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="img2">Segunda Imágen</label>
+                                <input id="img2" name="img2" type="file" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="img3">Tercera Imágen</label>
+                                <input id="img3" name="img3" type="file" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="video">Video del Articulo </label>
+                                <input id="video" name="video" type="file" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Crear Articulo</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>

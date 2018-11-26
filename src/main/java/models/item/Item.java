@@ -10,6 +10,7 @@ public class Item {
     private int searchedTimes;
     private int viewedTimes;
     private String category;
+    private boolean active;
 
     private byte[] picture1;
     private byte[] picture2;
@@ -18,6 +19,20 @@ public class Item {
 
     public int getId() {
         return id;
+    }
+
+    /**
+     * @return the active
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * @param active the active to set
+     */
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getCategory() {
