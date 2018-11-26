@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -44,8 +45,8 @@ public class Main {
     }
 */
     @Value("${spring.datasource.url}")
-    private String dbUrl = "jdbc:mysql://vahf5voe2w0xln5z:osenmng86mplly41@yhrz9vns005e0734.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/mxbrv4djh5ub33r4";
-
+    private String dbUrl = "";
+//jdbc:mysql://vahf5voe2w0xln5z:osenmng86mplly41@yhrz9vns005e0734.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/mxbrv4djh5ub33r4
     @Bean
     public DataSource dataSource() throws SQLException {
         if (dbUrl == null || dbUrl.isEmpty()) {
